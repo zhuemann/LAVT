@@ -33,7 +33,7 @@ def candid_data_setup():
     #output_resize = transforms.Compose([transforms.Resize((1024, 1024))])
     transforms_resize = T.Compose([T.Resize((1024, 1024))])
     #def get_transform(args):
-    transforms_candid = T.Compose[T.Resize(480, 480),
+    transforms_candid = T.Compose[T.Resize((480, 480)),
                     T.ToTensor(),
                     T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                 ]
