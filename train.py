@@ -182,7 +182,7 @@ def main(args):
     #                              args=args)
 
     dataset, _, dataset_test = candid_data_setup()
-    num_classes = 2
+    num_classes = 1
     # batch sampler
     print(f"local rank {args.local_rank} / global rank {utils.get_rank()} successfully built train dataset.")
     num_tasks = utils.get_world_size()

@@ -32,7 +32,8 @@ def candid_data_setup():
     IMG_SIZE = 480
     #transforms_resize = transforms.Compose([transforms.Resize((IMG_SIZE, IMG_SIZE)), transforms.PILToTensor()])
     #output_resize = transforms.Compose([transforms.Resize((1024, 1024))])
-    transforms_resize = T.Compose([T.Resize((1024, 1024))])
+    #transforms_resize = T.Compose([T.Resize((1024, 1024))])
+    transforms_resize = T.Compose([T.Resize((480, 480))])
     #def get_transform(args):
     transforms_candid = T.Compose([T.Resize((480, 480)),
                     T.ToTensor(),
