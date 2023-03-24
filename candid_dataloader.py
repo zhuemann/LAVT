@@ -150,7 +150,7 @@ class TextImageDataset(Dataset):
 
                 # print(type(img))
                 # img = Image.fromarray(img)
-                img = np.array(img)
+                # img = np.array(img)
                 # segmentation_mask_org = np.uint8(segmentation_mask_org)
                 # print(type(img))
                 #transformed = self.transforms(image=img, mask=segmentation_mask_org)
