@@ -203,6 +203,9 @@ class TextImageDataset(Dataset):
         # ax[2].imshow(segmentation_mask, cmap="jet", alpha = 1)
         # ax[2].imshow(image.squeeze().cpu().detach().numpy(), cmap=plt.cm.bone, alpha = .5)
         # plt.show()
+        print(f"image type: {type(image)}")
+        print(f"target type: {type(segmentation_mask)}")
+
         # print("returing from dataloader")
         return {
             'ids': torch.tensor(ids, dtype=torch.long),
