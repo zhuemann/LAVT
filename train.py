@@ -200,16 +200,16 @@ def main(args):
         dataset_test, batch_size=1, sampler=test_sampler, num_workers=args.workers)
 
     # model initialization
-    print(args.model)
+    #print(args.model)
     model = segmentation.__dict__[args.model](pretrained=args.pretrained_swin_weights,
                                               args=args)
     model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     model.cuda()
     print("not sure what this is")
     print([args.local_rank])
-    #model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank], find_unused_parameters=True)
-    #single_model = model.module
-    single_model = model
+    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank], find_unused_parameters=True)
+    single_model = model.module
+    #single_model = model
 
     if args.model != 'lavt_one':
         model_class = BertModel

@@ -1,4 +1,5 @@
 import argparse
+import utils
 
 def get_parser():
     parser = argparse.ArgumentParser(description='LAVT training and testing')
@@ -49,6 +50,9 @@ from train import main
 if __name__ == '__main__':
 
     parser = get_parser()
-    args_dict = parser.parse_args()
+    args = parser.parse_args()
 
-    main(args_dict)
+    # set up distributed learning
+    utils.init_distributed_mode(args)
+    print('Image size: {}'.format(str(args.img_size)))
+    main(args)
