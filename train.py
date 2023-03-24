@@ -208,7 +208,8 @@ def main(args):
     print("not sure what this is")
     print([args.local_rank])
     #model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank], find_unused_parameters=True)
-    single_model = model.module
+    #single_model = model.module
+    single_model = model
 
     if args.model != 'lavt_one':
         model_class = BertModel
