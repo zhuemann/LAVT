@@ -219,7 +219,7 @@ class TextImageDataset(Dataset):
             'images': image
         }
         """
-        return image, segmentation_mask, ids, mask
+        return image, segmentation_mask, torch.tensor(ids, dtype=torch.long), torch.tensor(mask, dtype=torch.long)
 
 
     def shuffledTextAugmentation(text):
