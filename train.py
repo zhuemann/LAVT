@@ -153,6 +153,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         else:
             output = model(image, sentences, l_mask=attentions)
 
+        print(output.size())
         loss = criterion(output, target)
         optimizer.zero_grad()  # set_to_none=True is only available in pytorch 1.6+
         loss.backward()
