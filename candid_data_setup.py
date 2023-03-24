@@ -29,7 +29,6 @@ def candid_data_setup():
     #print(test_dataframe_location)
     #test_df.to_excel(test_dataframe_location, index=True)
     # print(df)
-    df.set_index("image_id", inplace=True)
     IMG_SIZE = 480
     #transforms_resize = transforms.Compose([transforms.Resize((IMG_SIZE, IMG_SIZE)), transforms.PILToTensor()])
     #output_resize = transforms.Compose([transforms.Resize((1024, 1024))])
