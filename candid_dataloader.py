@@ -193,6 +193,7 @@ class TextImageDataset(Dataset):
         # print(segmentation_mask.shape)
         segmentation_mask = Image.fromarray(np.uint8(segmentation_mask_org))
         segmentation_mask = self.resize(segmentation_mask)
+        segmentation_mask = np.array(segmentation_mask)
         # for showing the images with maps and such
         # plt.figure()
         # DCM_Img = pdcm.read_file(img_path)
@@ -203,8 +204,8 @@ class TextImageDataset(Dataset):
         # ax[2].imshow(segmentation_mask, cmap="jet", alpha = 1)
         # ax[2].imshow(image.squeeze().cpu().detach().numpy(), cmap=plt.cm.bone, alpha = .5)
         # plt.show()
-        print(f"image type: {type(image)}")
-        print(f"target type: {type(segmentation_mask)}")
+        #print(f"image type: {type(image)}")
+        #print(f"target type: {type(segmentation_mask)}")
 
         # print("returing from dataloader")
         return {
