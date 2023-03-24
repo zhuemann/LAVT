@@ -175,6 +175,7 @@ class TextImageDataset(Dataset):
                     #img = self.norm(img)
                     #img = Image.fromarray(np.uint8(img))
                     image = self.resize(img)
+                    image = np.array(image) #turn back into array
                     #image = self.transforms(img)
 
                     #trying to do flipping

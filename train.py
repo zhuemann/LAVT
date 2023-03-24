@@ -176,6 +176,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         gc.collect()
         torch.cuda.empty_cache()
         torch.cuda.synchronize()
+        print("finished training epoch")
 
 
 def main(args):
@@ -295,6 +296,7 @@ def main(args):
         data_loader.sampler.set_epoch(epoch)
         train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoch, args.print_freq,
                         iterations, bert_model)
+        print("about to go into evaluate")
         iou, overallIoU = evaluate(model, data_loader_test, bert_model)
 
         print('Average object IoU {}'.format(iou))
