@@ -21,6 +21,8 @@ import torch.nn.functional as F
 
 import gc
 from collections import OrderedDict
+from candid_data_setup import candid_data_setup
+
 
 
 def get_dataset(image_set, transform, args):
@@ -172,13 +174,15 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
 
 
 def main(args):
-    dataset, num_classes = get_dataset("train",
-                                       get_transform(args=args),
-                                       args=args)
-    dataset_test, _ = get_dataset("val",
-                                  get_transform(args=args),
-                                  args=args)
+    #dataset, num_classes = get_dataset("train",
+    #                                   get_transform(args=args),
+    #                                   args=args)
+    #dataset_test, _ = get_dataset("val",
+    #                              get_transform(args=args),
+    #                              args=args)
 
+    dataset, _, dataset_test = candid_data_setup()
+    num_classes = 2
     # batch sampler
     print(f"local rank {args.local_rank} / global rank {utils.get_rank()} successfully built train dataset.")
     num_tasks = utils.get_world_size()
