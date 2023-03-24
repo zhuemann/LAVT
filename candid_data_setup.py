@@ -12,6 +12,7 @@ def candid_data_setup():
                                       'Zach_Analysis/candid_data/pneumothorax_with_multisegmentation_positive_text_df.xlsx')
 
     df = pd.read_excel(dataframe_location, engine='openpyxl')
+    df.set_index("image_id", inplace=True)
 
     train_df, test_valid_df = model_selection.train_test_split(
         df, train_size=.8, random_state=seed, shuffle=True  # stratify=df.label.values
