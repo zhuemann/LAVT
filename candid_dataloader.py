@@ -208,6 +208,7 @@ class TextImageDataset(Dataset):
         #print(f"target type: {type(segmentation_mask)}")
 
         # print("returing from dataloader")
+        """
         return {
             'ids': torch.tensor(ids, dtype=torch.long),
             'mask': torch.tensor(mask, dtype=torch.long),
@@ -217,6 +218,8 @@ class TextImageDataset(Dataset):
             'row_ids': self.row_ids[index],
             'images': image
         }
+        """
+        return image, segmentation_mask, ids, mask
 
 
     def shuffledTextAugmentation(text):
