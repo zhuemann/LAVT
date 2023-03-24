@@ -176,7 +176,6 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         gc.collect()
         torch.cuda.empty_cache()
         torch.cuda.synchronize()
-        print("finished training epoch")
 
 
 def main(args):
