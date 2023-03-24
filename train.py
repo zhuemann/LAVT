@@ -146,6 +146,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         attentions = attentions.squeeze(1)
 
         if bert_model is not None:
+            print("using bert model")
             last_hidden_states = bert_model(sentences, attention_mask=attentions)[0]  # (6, 10, 768)
             embedding = last_hidden_states.permute(0, 2, 1)  # (B, 768, N_l) to make Conv1d happy
             attentions = attentions.unsqueeze(dim=-1)  # (batch, N_l, 1)
@@ -154,7 +155,6 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
             output = model(image, sentences, l_mask=attentions)
 
         print(output.size())
-        print(output[0])
         loss = criterion(output, target)
         optimizer.zero_grad()  # set_to_none=True is only available in pytorch 1.6+
         loss.backward()
