@@ -35,7 +35,8 @@ class SimpleDecoding(nn.Module):
         self.bn2_2 = nn.BatchNorm2d(hidden_size)
         self.relu2_2 = nn.ReLU()
 
-        self.conv1_1 = nn.Conv2d(hidden_size, 2, 1)
+        #self.conv1_1 = nn.Conv2d(hidden_size, 2, 1)
+        self.conv1_1 = nn.Conv2d(hidden_size, 1, 1)
 
     def forward(self, x_c4, x_c3, x_c2, x_c1):
         # fuse Y4 and Y3
