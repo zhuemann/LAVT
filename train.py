@@ -154,6 +154,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         else:
             output = model(image, sentences, l_mask=attentions)
 
+        torch.squeeze(output, dim=1)
         print(f"image size: {image.size()}")
         print(f"outpust size: {output.size()}")
         print(f"target size: {target.size()}")
