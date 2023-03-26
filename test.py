@@ -16,6 +16,7 @@ import utils
 import numpy as np
 from PIL import Image
 import torch.nn.functional as F
+from utility import dice_coeff
 
 
 def get_dataset(image_set, transform, args):
@@ -41,6 +42,7 @@ def evaluate(model, data_loader, bert_model, device):
     seg_total = 0
     mean_IoU = []
     header = 'Test:'
+    test_dice = []
 
     with torch.no_grad():
         for data in metric_logger.log_every(data_loader, 100, header):
@@ -57,6 +59,17 @@ def evaluate(model, data_loader, bert_model, device):
                     output = model(image, embedding, l_mask=attentions[:, :, j].unsqueeze(-1))
                 else:
                     output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
+
+                # """
+                for i in range(0, output.shape[0]):
+                    # print(f"output size: {output[i].size()}")
+                    # print(f"target size: {target[i].size()}")
+                    dice = dice_coeff(output[i], target[i])
+                    dice = dice.item()
+                    # if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
+                    #    dice = 1
+                    test_dice.append(dice)
+                # """
 
                 output = output.cpu()
                 output_mask = output.argmax(1).data.numpy()
@@ -87,6 +100,8 @@ def evaluate(model, data_loader, bert_model, device):
                        (str(eval_seg_iou_list[n_eval_iou]), seg_correct[n_eval_iou] * 100. / seg_total)
     results_str += '    overall IoU = %.2f\n' % (cum_I * 100. / cum_U)
     print(results_str)
+    print(f"Final Test Dice: = {np.average(test_dice)}")
+
 
 
 def get_transform(args):
