@@ -105,9 +105,9 @@ def computeIoU(pred_seg, gd_seg):
     return I, U
 
 
-def main(args):
+def test_main(args, dataset_test):
     device = torch.device(args.device)
-    dataset_test, _ = get_dataset(args.split, get_transform(args=args), args)
+    #dataset_test, _ = get_dataset(args.split, get_transform(args=args), args)
     test_sampler = torch.utils.data.SequentialSampler(dataset_test)
     data_loader_test = torch.utils.data.DataLoader(dataset_test, batch_size=1,
                                                    sampler=test_sampler, num_workers=args.workers)

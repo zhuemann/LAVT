@@ -5,8 +5,8 @@ from sklearn import model_selection
 from transformers import AutoTokenizer
 from candid_dataloader import TextImageDataset
 
-def candid_data_setup():
-    seed = 117
+def candid_data_setup(seed):
+    #seed = 117
     dir_base = "/UserData/"
     dataframe_location = os.path.join(dir_base,
                                       'Zach_Analysis/candid_data/pneumothorax_with_multisegmentation_positive_text_df.xlsx')

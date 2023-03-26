@@ -210,7 +210,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
     print(f"Epoch {str(epoch)}, Average Train Dice Score = {np.average(train_dice)}")
 
 
-def main(args):
+def main(args, dataset, dataset_valid):
     #dataset, num_classes = get_dataset("train",
     #                                   get_transform(args=args),
     #                                   args=args)
@@ -218,7 +218,8 @@ def main(args):
     #                              get_transform(args=args),
     #                              args=args)
 
-    dataset, _, dataset_test = candid_data_setup()
+    #dataset, dataset_valid, dataset_test = candid_data_setup()
+    dataset_test = dataset_valid
     num_classes = 1
     # batch sampler
     print(f"local rank {args.local_rank} / global rank {utils.get_rank()} successfully built train dataset.")
