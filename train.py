@@ -41,13 +41,13 @@ def get_dataset(image_set, transform, args):
 # IoU calculation for validation
 def IoU(pred, gt):
     pred = pred.argmax(1)
-    print(f"predition size: {pred.size()}")
+    #print(f"predition size: {pred.size()}")
     intersection = torch.sum(torch.mul(pred, gt))
-    print(f"intersection: {intersection}")
+    #print(f"intersection: {intersection}")
     union = torch.sum(torch.add(pred, gt)) - intersection
 
-    print(f"sum of prediciton: {torch.sum(pred)}")
-    print(f"sum of target: {torch.sum(gt)}")
+    #print(f"sum of prediciton: {torch.sum(pred)}")
+    #print(f"sum of target: {torch.sum(gt)}")
 
     if intersection == 0 or union == 0:
         iou = 0
@@ -106,7 +106,7 @@ def evaluate(model, data_loader, bert_model):
             else:
                 output = model(image, sentences, l_mask=attentions)
 
-            """
+            #"""
             for i in range(0, output.shape[0]):
                 print(f"output size: {output[i].size()}")
                 print(f"target size: {target[i].size()}")
@@ -115,7 +115,7 @@ def evaluate(model, data_loader, bert_model):
                 if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
                     dice = 1
                 valid_dice.append(dice)
-            """
+            #"""
             iou, I, U = IoU(output, target)
             acc_ious += iou
             mean_IoU.append(iou)
@@ -137,7 +137,7 @@ def evaluate(model, data_loader, bert_model):
                        (str(eval_seg_iou_list[n_eval_iou]), seg_correct[n_eval_iou] * 100. / seg_total)
     results_str += '    overall IoU = %.2f\n' % (cum_I * 100. / cum_U)
     print(results_str)
-    #print(f"Average Valid Dice Score = {np.average(valid_dice)}")
+    print(f"Average Valid Dice Score = {np.average(valid_dice)}")
 
 
     return 100 * iou, 100 * cum_I / cum_U
@@ -177,7 +177,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
 
         #output = torch.squeeze(output, dim=1)
         #print(f"image size: {image.size()}")
-        print(f"outpust size: {output.size()}")
+        #print(f"outpust size: {output.size()}")
         #print(f"target size: {target.size()}")
         loss = criterion(output, target)
         optimizer.zero_grad()  # set_to_none=True is only available in pytorch 1.6+
@@ -192,8 +192,8 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
 
         #"""
         for i in range(0, output.shape[0]):
-            print(f"output size: {output[i].size()}")
-            print(f"target size: {target[i].size()}")
+            #print(f"output size: {output[i].size()}")
+            #print(f"target size: {target[i].size()}")
             dice = dice_coeff(output[i], target[i])
             dice = dice.item()
             if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
@@ -207,7 +207,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         gc.collect()
         torch.cuda.empty_cache()
         torch.cuda.synchronize()
-    #print(f"Epoch {str(epoch)}, Average Train Dice Score = {np.average(train_dice)}")
+    print(f"Epoch {str(epoch)}, Average Train Dice Score = {np.average(train_dice)}")
 
 
 def main(args):

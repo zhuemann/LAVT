@@ -54,7 +54,7 @@ def dice_coeff(pred, target):
 """
 def dice_coeff(pred, gt):
     pred = pred.argmax(0)
-    print(f"predition size: {pred.size()}")
+    #print(f"predition size: {pred.size()}")
 
     smooth = 1
     num = pred.size(0)
