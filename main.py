@@ -26,7 +26,7 @@ def get_parser():
     parser.add_argument('--output-dir', default='./checkpoints/', help='path where to save checkpoint weights')
     parser.add_argument('--pin_mem', action='store_true',
                         help='If true, pin memory when using the data loader.')
-    parser.add_argument('--pretrained_swin_weights', default='',
+    parser.add_argument('--pretrained_swin_weights', default='pretrained_weights',
                         help='path to pre-trained Swin backbone weights')
     parser.add_argument('--print-freq', default=10, type=int, help='print frequency')
     parser.add_argument('--refer_data_root', default='./refer/data/', help='REFER dataset root directory')
