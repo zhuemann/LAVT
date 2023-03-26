@@ -187,6 +187,8 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         metric_logger.update(loss=loss.item(), lr=optimizer.param_groups[0]["lr"])
 
         for i in range(0, output.shape[0]):
+            print(f"output size: {output[i].size()}")
+            print(f"target size: {target[i].size()}")
             dice = dice_coeff(output[i], target[i])
             dice = dice.item()
             if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
