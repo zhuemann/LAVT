@@ -301,8 +301,8 @@ def main(args):
     # training loops
     for epoch in range(max(0, resume_epoch+1), args.epochs):
         data_loader.sampler.set_epoch(epoch)
-        train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoch, args.print_freq,
-                        iterations, bert_model)
+        #train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoch, args.print_freq,
+        #                iterations, bert_model)
         print("about to go into evaluate")
         iou, overallIoU = evaluate(model, data_loader_test, bert_model)
 
