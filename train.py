@@ -88,9 +88,12 @@ def evaluate(model, data_loader, bert_model):
                                                    target.cuda(non_blocking=True),\
                                                    sentences.cuda(non_blocking=True),\
                                                    attentions.cuda(non_blocking=True)
-
+            print(f"sentences size before: {sentences.size()}")
+            print(f"attentions before: {attentions.size()}")
             sentences = sentences.squeeze(1)
             attentions = attentions.squeeze(1)
+            print(f"sentences size after: {sentences.size()}")
+            print(f"attentions after: {attentions.size()}")
 
             if bert_model is not None:
                 last_hidden_states = bert_model(sentences, attention_mask=attentions)[0]
@@ -100,6 +103,7 @@ def evaluate(model, data_loader, bert_model):
             else:
                 output = model(image, sentences, l_mask=attentions)
 
+            print("got outputs")
             iou, I, U = IoU(output, target)
             acc_ious += iou
             mean_IoU.append(iou)
@@ -202,7 +206,7 @@ def main(args):
         sampler=train_sampler, num_workers=args.workers, pin_memory=args.pin_mem, drop_last=True)
 
     data_loader_test = torch.utils.data.DataLoader(
-        dataset_test, batch_size=1, sampler=test_sampler, num_workers=args.workers)
+        dataset_test, batch_size=8, sampler=test_sampler, num_workers=args.workers)
 
     # model initialization
     #print(args.model)
@@ -210,8 +214,8 @@ def main(args):
                                               args=args)
     model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     model.cuda()
-    print("not sure what this is")
-    print([args.local_rank])
+    #print("not sure what this is")
+    #print([args.local_rank])
     model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank], find_unused_parameters=True)
     #model = torch.nn.parallel.DistributedDataParallel(model, device_ids=0, find_unused_parameters=True)
     single_model = model.module
