@@ -91,10 +91,6 @@ def evaluate(model, data_loader, bert_model):
             sentences = sentences.squeeze(1)
             attentions = attentions.squeeze(1)
 
-            print(f"sentences evaluate size before: {sentences.size()}")
-            print(f"attentions evaluate before: {attentions.size()}")
-            print(f"image evaluate before: {image.size()}")
-
             if bert_model is not None:
                 last_hidden_states = bert_model(sentences, attention_mask=attentions)[0]
                 embedding = last_hidden_states.permute(0, 2, 1)  # (B, 768, N_l) to make Conv1d happy
@@ -103,7 +99,6 @@ def evaluate(model, data_loader, bert_model):
             else:
                 output = model(image, sentences, l_mask=attentions)
 
-            print("got outputs")
             iou, I, U = IoU(output, target)
             acc_ious += iou
             mean_IoU.append(iou)
@@ -149,9 +144,6 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         sentences = sentences.squeeze(1)
         attentions = attentions.squeeze(1)
 
-        print(f"sentences size before: {sentences.size()}")
-        print(f"attentions before: {attentions.size()}")
-        print(f"image before: {image.size()}")
 
         if bert_model is not None:
             print("using bert model")
@@ -301,8 +293,8 @@ def main(args):
     # training loops
     for epoch in range(max(0, resume_epoch+1), args.epochs):
         data_loader.sampler.set_epoch(epoch)
-        #train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoch, args.print_freq,
-        #                iterations, bert_model)
+        train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoch, args.print_freq,
+                        iterations, bert_model)
         print("about to go into evaluate")
         iou, overallIoU = evaluate(model, data_loader_test, bert_model)
 
