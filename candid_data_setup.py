@@ -53,9 +53,9 @@ def candid_data_setup():
     training_set = TextImageDataset(train_df, tokenizer, 512, mode="train", transforms=transforms_candid,
                                     resize=transforms_resize, dir_base=dir_base, img_size=IMG_SIZE, wordDict=None,
                                     norm=None)
-    valid_set = TextImageDataset(valid_df, tokenizer, 512, transforms=transforms_candid, resize=transforms_resize,
+    valid_set = TextImageDataset(valid_df, tokenizer, 512, mode="train", transforms=transforms_candid, resize=transforms_resize,
                                  dir_base=dir_base, img_size=IMG_SIZE, wordDict=None, norm=None)
-    test_set = TextImageDataset(test_df, tokenizer, 512, transforms=transforms_candid, resize=transforms_resize,
+    test_set = TextImageDataset(test_df, tokenizer, 512, mode="train", transforms=transforms_candid, resize=transforms_resize,
                                 dir_base=dir_base, img_size=IMG_SIZE, wordDict=None, norm=None)
 
 
