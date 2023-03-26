@@ -190,7 +190,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         iterations += 1
         metric_logger.update(loss=loss.item(), lr=optimizer.param_groups[0]["lr"])
 
-        """
+        #"""
         for i in range(0, output.shape[0]):
             print(f"output size: {output[i].size()}")
             print(f"target size: {target[i].size()}")
@@ -199,7 +199,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
             if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
                 dice = 1
             train_dice.append(dice)
-        """
+        #"""
         del image, target, sentences, attentions, loss, output, data
         if bert_model is not None:
             del last_hidden_states, embedding
