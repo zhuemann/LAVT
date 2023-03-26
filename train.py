@@ -87,13 +87,13 @@ def evaluate(model, data_loader, bert_model):
             image, target, sentences, attentions = image.cuda(non_blocking=True),\
                                                    target.cuda(non_blocking=True),\
                                                    sentences.cuda(non_blocking=True),\
-                                                   attentions.cuda(non_blocking=True)
-            print(f"sentences size before: {sentences.size()}")
-            print(f"attentions before: {attentions.size()}")
+
             sentences = sentences.squeeze(1)
             attentions = attentions.squeeze(1)
-            print(f"sentences size after: {sentences.size()}")
-            print(f"attentions after: {attentions.size()}")
+
+            print(f"sentences evaluate size before: {sentences.size()}")
+            print(f"attentions evaluate before: {attentions.size()}")
+            print(f"image evaluate before: {image.size()}")
 
             if bert_model is not None:
                 last_hidden_states = bert_model(sentences, attention_mask=attentions)[0]
@@ -148,6 +148,10 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
 
         sentences = sentences.squeeze(1)
         attentions = attentions.squeeze(1)
+
+        print(f"sentences size before: {sentences.size()}")
+        print(f"attentions before: {attentions.size()}")
+        print(f"image before: {image.size()}")
 
         if bert_model is not None:
             print("using bert model")
