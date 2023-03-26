@@ -102,7 +102,7 @@ def evaluate(model, data_loader, bert_model):
             else:
                 output = model(image, sentences, l_mask=attentions)
 
-            """
+
             for i in range(0, output.shape[0]):
                 print(f"output size: {output[i].size()}")
                 print(f"target size: {target[i].size()}")
@@ -111,7 +111,7 @@ def evaluate(model, data_loader, bert_model):
                 if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
                     dice = 1
                 valid_dice.append(dice)
-            """
+
             iou, I, U = IoU(output, target)
             acc_ious += iou
             mean_IoU.append(iou)
@@ -133,7 +133,7 @@ def evaluate(model, data_loader, bert_model):
                        (str(eval_seg_iou_list[n_eval_iou]), seg_correct[n_eval_iou] * 100. / seg_total)
     results_str += '    overall IoU = %.2f\n' % (cum_I * 100. / cum_U)
     print(results_str)
-    #print(f"Average Valid Dice Score = {np.average(valid_dice)}")
+    print(f"Average Valid Dice Score = {np.average(valid_dice)}")
 
 
     return 100 * iou, 100 * cum_I / cum_U
@@ -186,7 +186,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         iterations += 1
         metric_logger.update(loss=loss.item(), lr=optimizer.param_groups[0]["lr"])
 
-        """
+
         for i in range(0, output.shape[0]):
             print(f"output size: {output[i].size()}")
             print(f"target size: {target[i].size()}")
@@ -195,7 +195,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
             if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
                 dice = 1
             train_dice.append(dice)
-        """
+
         del image, target, sentences, attentions, loss, output, data
         if bert_model is not None:
             del last_hidden_states, embedding
@@ -203,7 +203,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
         gc.collect()
         torch.cuda.empty_cache()
         torch.cuda.synchronize()
-    #print(f"Epoch {str(epoch)}, Average Train Dice Score = {np.average(train_dice)}")
+    print(f"Epoch {str(epoch)}, Average Train Dice Score = {np.average(train_dice)}")
 
 
 def main(args):

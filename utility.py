@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 
 def rle_decode_modified(mask_rle, shape):
     '''
@@ -40,6 +41,7 @@ def rle_decode(mask_rle, shape):
         img[lo:hi] = 1
     return img.reshape(shape)
 
+"""
 def dice_coeff(pred, target):
     smooth = 1.
     num = pred.size(0)
@@ -47,4 +49,14 @@ def dice_coeff(pred, target):
     m2 = target.view(num, -1)  # Flatten
     intersection = (m1 * m2).sum()
 
+    return (2. * intersection + smooth) / (m1.sum() + m2.sum() + smooth)
+
+"""
+def dice_coeff(pred, gt):
+    pred = pred.argmax(1)
+    smooth = 1
+    num = pred.size(0)
+    intersection = torch.sum(torch.mul(pred, gt))
+    m1 = pred.view(num, -1)  # Flatten
+    m2 = gt.view(num, -1)  # Flatten
     return (2. * intersection + smooth) / (m1.sum() + m2.sum() + smooth)
