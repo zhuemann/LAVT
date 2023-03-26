@@ -177,7 +177,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
 
         #output = torch.squeeze(output, dim=1)
         #print(f"image size: {image.size()}")
-        #print(f"outpust size: {output.size()}")
+        print(f"outpust size: {output.size()}")
         #print(f"target size: {target.size()}")
         loss = criterion(output, target)
         optimizer.zero_grad()  # set_to_none=True is only available in pytorch 1.6+
