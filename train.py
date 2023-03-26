@@ -108,12 +108,12 @@ def evaluate(model, data_loader, bert_model):
 
             #"""
             for i in range(0, output.shape[0]):
-                print(f"output size: {output[i].size()}")
-                print(f"target size: {target[i].size()}")
+                #print(f"output size: {output[i].size()}")
+                #print(f"target size: {target[i].size()}")
                 dice = dice_coeff(output[i], target[i])
                 dice = dice.item()
-                if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
-                    dice = 1
+                #if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
+                #    dice = 1
                 valid_dice.append(dice)
             #"""
             iou, I, U = IoU(output, target)
@@ -196,8 +196,8 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
             #print(f"target size: {target[i].size()}")
             dice = dice_coeff(output[i], target[i])
             dice = dice.item()
-            if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
-                dice = 1
+            #if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
+            #    dice = 1
             train_dice.append(dice)
         #"""
         del image, target, sentences, attentions, loss, output, data
