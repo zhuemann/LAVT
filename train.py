@@ -86,8 +86,8 @@ def evaluate(model, data_loader, bert_model):
             image, target, sentences, attentions = data
             image, target, sentences, attentions = image.cuda(non_blocking=True),\
                                                    target.cuda(non_blocking=True),\
-                                                   sentences.cuda(non_blocking=True),\
-
+                                                   sentences.cuda(non_blocking=True), \
+                                                   attentions.cuda(non_blocking=True)
             sentences = sentences.squeeze(1)
             attentions = attentions.squeeze(1)
 
