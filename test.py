@@ -54,7 +54,8 @@ def evaluate(model, data_loader, bert_model, device):
             attentions = attentions.squeeze(1)
             target_gpu = target
             target = target.cpu().data.numpy()
-            for j in range(sentences.size(-1)):
+            #for j in range(sentences.size(-1)):
+            for j in range(1):
                 print(f"j: {j}")
                 if bert_model is not None:
                     last_hidden_states = bert_model(sentences[:, :, j], attention_mask=attentions[:, :, j])[0]
