@@ -73,6 +73,7 @@ def evaluate(model, data_loader, bert_model, device):
                     #print(f"target size: {target[0].size()}")
                     dice = dice_coeff(output, target_gpu)
                     dice = dice.item()
+                    print(f"dice index : {len(test_dice)} with value: {dice}")
                     # if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
                     #    dice = 1
                     test_dice.append(dice)

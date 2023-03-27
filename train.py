@@ -249,7 +249,7 @@ def main(args, dataset, dataset_valid):
     #model = torch.nn.parallel.DistributedDataParallel(model, device_ids=0, find_unused_parameters=True)
     single_model = model.module
     #single_model = model
-
+    print(f"args.model determines if we use bert: {args.model}")
     if args.model != 'lavt_one':
         model_class = BertModel
         bert_model = model_class.from_pretrained(args.ck_bert)
@@ -261,7 +261,7 @@ def main(args, dataset, dataset_valid):
     else:
         bert_model = None
         single_bert_model = None
-
+    print(f"using bert model: {bert_model}")
     # resume training
     if args.resume:
         checkpoint = torch.load(args.resume, map_location='cpu')
