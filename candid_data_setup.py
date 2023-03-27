@@ -23,7 +23,8 @@ def candid_data_setup(seed):
         test_valid_df, test_size=.2, random_state=seed, shuffle=True
         # stratify=test_valid_df.label.values
     )
-    test_dataframe_location = os.path.join('./checkpoint/pneumothorax_testset_df_seed' + str(117) + '.xlsx')
+    #save_location = "/UserData/Zach_Analysis/git_multimodal/lavt/LAVT/checkpoints"
+    test_dataframe_location = os.path.join('./checkpoints/pneumothorax_testset_df_seed' + str(117) + '.xlsx')
     print(test_dataframe_location)
     test_df.to_excel(test_dataframe_location, index=True)
     #test_dataframe_location = os.path.join(save_location,
