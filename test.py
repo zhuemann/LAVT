@@ -50,7 +50,7 @@ def evaluate(model, data_loader, bert_model, device):
             image, target, sentences, attentions = image.to(device), target.to(device), \
                                                    sentences.to(device), attentions.to(device)
             sentences = sentences.squeeze(1)
-            print(f"setences size: {sentences.size()}")
+            #print(f"setences size: {sentences.size()}")
             attentions = attentions.squeeze(1)
             target_gpu = target
             target = target.cpu().data.numpy()
