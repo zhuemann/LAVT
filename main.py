@@ -35,7 +35,7 @@ def get_parser():
                         help='path to pre-trained Swin backbone weights')
     parser.add_argument('--print-freq', default=10, type=int, help='print frequency')
     parser.add_argument('--refer_data_root', default='./refer/data/', help='REFER dataset root directory')
-    parser.add_argument('--resume', default='./checkpoints/model_best_lavt.pth', help='resume from checkpoint')
+    parser.add_argument('--resume', default='', help='resume from checkpoint')
     parser.add_argument('--split', default='test', help='only used when testing')
     parser.add_argument('--splitBy', default='unc', help='change to umd or google when the dataset is G-Ref (RefCOCOg)')
     parser.add_argument('--swin_type', default='base',
@@ -62,4 +62,5 @@ if __name__ == '__main__':
     print('Image size: {}'.format(str(args.img_size)))
     dataset, dataset_valid, dataset_test = candid_data_setup(seed = 117)
     main(args, dataset, dataset_valid)
+    args.resume = './checkpoints/model_best_lavt.pth'
     test_main(args, dataset_test)
