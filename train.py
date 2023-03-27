@@ -173,8 +173,8 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
             attentions = attentions.unsqueeze(dim=-1)  # (batch, N_l, 1)
             output = model(image, embedding, l_mask=attentions)
         else:
-            print(f"setences size: {sentences.size()}")
-            print(f"attentions size: {attentions.size()}")
+            #print(f"setences size: {sentences.size()}")
+            #print(f"attentions size: {attentions.size()}")
             output = model(image, sentences, l_mask=attentions)
 
         loss = criterion(output, target)
