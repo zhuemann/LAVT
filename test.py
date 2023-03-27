@@ -59,8 +59,8 @@ def evaluate(model, data_loader, bert_model, device):
                     embedding = last_hidden_states.permute(0, 2, 1)
                     output = model(image, embedding, l_mask=attentions[:, :, j].unsqueeze(-1))
                 else:
-                    print(f"setences size: {sentences.size()}")
-                    print(f"attentions size: {attentions.size()}")
+                    #print(f"setences size: {sentences.size()}")
+                    #print(f"attentions size: {attentions.size()}")
                     #output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
                     output = model(image, sentences, l_mask=attentions)
                 #print(f"target: {target}")
