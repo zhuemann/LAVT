@@ -61,8 +61,8 @@ def evaluate(model, data_loader, bert_model, device):
                 else:
                     #print(f"setences size: {sentences.size()}")
                     #print(f"attentions size: {attentions.size()}")
-                    #output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
-                    output = model(image, sentences, l_mask=attentions)
+                    output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
+                    #output = model(image, sentences, l_mask=attentions)
                 #print(f"target: {target}")
                 #print(type(target_gpu))
                 #print(f"output type: {type(output)}")
@@ -71,7 +71,7 @@ def evaluate(model, data_loader, bert_model, device):
                 for i in range(0, output.shape[0]):
                     #print(f"output size: {output[0].size()}")
                     #print(f"target size: {target[0].size()}")
-                    dice = dice_coeff(output, target_gpu)
+                    dice = dice_coeff(output[0], target_gpu[0])
                     dice = dice.item()
                     print(f"dice index : {len(test_dice)} with value: {dice}")
                     # if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
@@ -132,7 +132,7 @@ def test_main(args, dataset_test):
     device = torch.device(args.device)
     #dataset_test, _ = get_dataset(args.split, get_transform(args=args), args)
     test_sampler = torch.utils.data.SequentialSampler(dataset_test)
-    data_loader_test = torch.utils.data.DataLoader(dataset_test, batch_size=1,
+    data_loader_test = torch.utils.data.DataLoader(dataset_test, batch_size=8,
                                                    sampler=test_sampler, num_workers=args.workers)
     print(args.model)
     single_model = segmentation.__dict__[args.model](pretrained='./checkpoints/model_best_lavt.pth', args=args)
