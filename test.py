@@ -58,6 +58,8 @@ def evaluate(model, data_loader, bert_model, device):
                     embedding = last_hidden_states.permute(0, 2, 1)
                     output = model(image, embedding, l_mask=attentions[:, :, j].unsqueeze(-1))
                 else:
+                    print(f"setences size: {sentences.size()}")
+                    print(f"attentions size: {attentions.size()}")
                     output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
 
                 # """
@@ -132,7 +134,7 @@ def test_main(args, dataset_test):
     checkpoint = torch.load(args.resume, map_location='cpu')
     single_model.load_state_dict(checkpoint['model'])
     model = single_model.to(device)
-    args.model = "lavt_one"
+
     if args.model != 'lavt_one':
         model_class = BertModel
         single_bert_model = model_class.from_pretrained(args.ck_bert)
