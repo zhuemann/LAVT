@@ -62,11 +62,11 @@ def evaluate(model, data_loader, bert_model, device):
                     print(f"attentions size: {attentions.size()}")
                     #output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
                     output = model(image, sentences, l_mask=attentions)
-
+                print(f"target: {target}")
                 # """
                 for i in range(0, output.shape[0]):
-                    print(f"output size: {output.size()}")
-                    print(f"target size: {target.size()}")
+                    print(f"output size: {output[0].size()}")
+                    print(f"target size: {target[0].size()}")
                     dice = dice_coeff(output, target)
                     dice = dice.item()
                     # if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
