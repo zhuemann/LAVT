@@ -9,7 +9,9 @@ def get_parser():
                         help='if true, set amsgrad to True in an Adam or AdamW optimizer.')
     parser.add_argument('-b', '--batch-size', default=8, type=int)
     parser.add_argument('--bert_tokenizer', default='bert-base-uncased', help='BERT tokenizer')
-    parser.add_argument('--ck_bert', default='bert-base-uncased', help='pre-trained BERT weights')
+    #parser.add_argument('--ck_bert', default='bert-base-uncased', help='pre-trained BERT weights')
+    parser.add_argument('--ck_bert', default='/UserData/Zach_Analysis/models/bert/', help='pre-trained BERT weights')
+
     parser.add_argument('--dataset', default='refcoco', help='refcoco, refcoco+, or refcocog')
     parser.add_argument('--ddp_trained_weights', action='store_true',
                         help='Only needs specified when testing,'
@@ -58,5 +60,5 @@ if __name__ == '__main__':
     utils.init_distributed_mode(args)
     print('Image size: {}'.format(str(args.img_size)))
     dataset, dataset_valid, dataset_test = candid_data_setup(seed = 117)
-    #main(args, dataset, dataset_valid)
+    main(args, dataset, dataset_valid)
     test_main(args, dataset_test)
