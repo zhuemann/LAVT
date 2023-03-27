@@ -143,7 +143,7 @@ def test_main(args, dataset_test):
         bert_model = single_bert_model.to(device)
     else:
         bert_model = None
-
+    print(f"using a bert model: {bert_model}")
     evaluate(model, data_loader_test, bert_model, device=device)
 
 
