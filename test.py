@@ -56,14 +56,14 @@ def evaluate(model, data_loader, bert_model, device):
             target = target.cpu().data.numpy()
             #for j in range(sentences.size(-1)):
             for j in range(1):
-                print(f"j: {j}")
+                #print(f"j: {j}")
                 if bert_model is not None:
                     last_hidden_states = bert_model(sentences[:, :, j], attention_mask=attentions[:, :, j])[0]
                     embedding = last_hidden_states.permute(0, 2, 1)
                     output = model(image, embedding, l_mask=attentions[:, :, j].unsqueeze(-1))
                 else:
-                    print(f"setences size: {sentences.size()}")
-                    print(f"attentions size: {attentions.size()}")
+                    #print(f"setences size: {sentences.size()}")
+                    #print(f"attentions size: {attentions.size()}")
                     #output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
                     output = model(image, sentences, l_mask=attentions)
                 #print(f"target: {target}")
@@ -76,7 +76,7 @@ def evaluate(model, data_loader, bert_model, device):
                     #print(f"target size: {target[0].size()}")
                     dice = dice_coeff(output[0], target_gpu[0])
                     dice = dice.item()
-                    print(f"dice index : {len(test_dice)} with value: {dice}")
+                    #print(f"dice index : {len(test_dice)} with value: {dice}")
                     # if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
                     #    dice = 1
                     test_dice.append(dice)
