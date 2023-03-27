@@ -61,8 +61,5 @@ if __name__ == '__main__':
     utils.init_distributed_mode(args)
     print('Image size: {}'.format(str(args.img_size)))
     dataset, dataset_valid, dataset_test = candid_data_setup(seed = 117)
-    test_dataframe_location = os.path.join('./checkpoint/pneumothorax_testset_df_seed' + str(117) + '.xlsx')
-    print(test_dataframe_location)
-    dataset_test.to_excel(test_dataframe_location, index=True)
     main(args, dataset, dataset_valid)
     test_main(args, dataset_test)
