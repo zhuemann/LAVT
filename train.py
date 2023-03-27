@@ -362,4 +362,5 @@ if __name__ == "__main__":
     # set up distributed learning
     utils.init_distributed_mode(args)
     print('Image size: {}'.format(str(args.img_size)))
+    print("iniate main still called")
     main(args)
