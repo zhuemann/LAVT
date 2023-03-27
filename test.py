@@ -132,7 +132,7 @@ def test_main(args, dataset_test):
     checkpoint = torch.load(args.resume, map_location='cpu')
     single_model.load_state_dict(checkpoint['model'])
     model = single_model.to(device)
-
+    args.model = "lavt_one"
     if args.model != 'lavt_one':
         model_class = BertModel
         single_bert_model = model_class.from_pretrained(args.ck_bert)
