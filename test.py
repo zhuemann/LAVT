@@ -63,9 +63,9 @@ def evaluate(model, data_loader, bert_model, device):
                     print(f"attentions size: {attentions.size()}")
                     #output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
                     output = model(image, sentences, l_mask=attentions)
-                print(f"target: {target}")
-                print(type(target_gpu))
-                print(f"output type: {type(output)}")
+                #print(f"target: {target}")
+                #print(type(target_gpu))
+                #print(f"output type: {type(output)}")
                 # """
 
                 for i in range(0, output.shape[0]):
