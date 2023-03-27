@@ -39,7 +39,7 @@ def get_parser():
                         help='tiny, small, base, or large variants of the Swin Transformer')
     parser.add_argument('--wd', '--weight-decay', default=1e-2, type=float, metavar='W', help='weight decay',
                         dest='weight_decay')
-    parser.add_argument('--window12', action='store_true',
+    parser.add_argument('--window12', default="window12", action='store_true',
                         help='only needs specified when testing,'
                              'when training, window size is inferred from pre-trained weights file name'
                              '(containing \'window12\'). Initialize Swin with window size 12 instead of the default 7.')
