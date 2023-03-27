@@ -63,8 +63,8 @@ def evaluate(model, data_loader, bert_model, device):
                 else:
                     print(f"setences size: {sentences.size()}")
                     print(f"attentions size: {attentions.size()}")
-                    output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
-                    #output = model(image, sentences, l_mask=attentions)
+                    #output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
+                    output = model(image, sentences, l_mask=attentions)
                 #print(f"target: {target}")
                 #print(type(target_gpu))
                 #print(f"output type: {type(output)}")
