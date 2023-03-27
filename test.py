@@ -60,7 +60,8 @@ def evaluate(model, data_loader, bert_model, device):
                 else:
                     print(f"setences size: {sentences.size()}")
                     print(f"attentions size: {attentions.size()}")
-                    output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
+                    #output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
+                    output = model(image, sentences, l_mask=attentions)
 
                 # """
                 for i in range(0, output.shape[0]):
