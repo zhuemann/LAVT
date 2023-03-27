@@ -65,9 +65,9 @@ def evaluate(model, data_loader, bert_model, device):
 
                 # """
                 for i in range(0, output.shape[0]):
-                    print(f"output size: {output[i].size()}")
-                    print(f"target size: {target[i].size()}")
-                    dice = dice_coeff(output[i], target[i])
+                    print(f"output size: {output.size()}")
+                    print(f"target size: {target.size()}")
+                    dice = dice_coeff(output, target)
                     dice = dice.item()
                     # if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
                     #    dice = 1
