@@ -135,7 +135,7 @@ def test_main(args, dataset_test):
     device = torch.device(args.device)
     #dataset_test, _ = get_dataset(args.split, get_transform(args=args), args)
     test_sampler = torch.utils.data.SequentialSampler(dataset_test)
-    data_loader_test = torch.utils.data.DataLoader(dataset_test, batch_size=8,
+    data_loader_test = torch.utils.data.DataLoader(dataset_test, batch_size=1,
                                                    sampler=test_sampler, num_workers=args.workers)
     print(args.model)
     single_model = segmentation.__dict__[args.model](pretrained='./checkpoints/model_best_lavt.pth', args=args)
