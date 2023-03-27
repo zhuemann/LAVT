@@ -8,27 +8,40 @@ from candid_dataloader import TextImageDataset
 def candid_data_setup(seed):
     #seed = 117
     dir_base = "/UserData/"
-    dataframe_location = os.path.join(dir_base,
-                                      'Zach_Analysis/candid_data/pneumothorax_with_multisegmentation_positive_text_df.xlsx')
+    #dataframe_location = os.path.join(dir_base,
+    #                                  'Zach_Analysis/candid_data/pneumothorax_with_multisegmentation_positive_text_df.xlsx')
 
-    df = pd.read_excel(dataframe_location, engine='openpyxl')
-    print(df)
-    df.set_index("image_id", inplace=True)
+    #df = pd.read_excel(dataframe_location, engine='openpyxl')
+    #print(df)
+    #df.set_index("image_id", inplace=True)
 
-    train_df, test_valid_df = model_selection.train_test_split(
-        df, train_size=.8, random_state=seed, shuffle=True  # stratify=df.label.values
-    )
+    #train_df, test_valid_df = model_selection.train_test_split(
+    #    df, train_size=.8, random_state=seed, shuffle=True  # stratify=df.label.values
+    #)
     # Splits the test and valid sets in half so they are both 10% of total data
-    test_df, valid_df = model_selection.train_test_split(
-        test_valid_df, test_size=.2, random_state=seed, shuffle=True
+    #test_df, valid_df = model_selection.train_test_split(
+    #    test_valid_df, test_size=.2, random_state=seed, shuffle=True
         # stratify=test_valid_df.label.values
-    )
+    #)
     #save_location = "/UserData/Zach_Analysis/git_multimodal/lavt/LAVT/checkpoints"
-    test_dataframe_location = os.path.join('./checkpoints/pneumothorax_testset_df_seed' + str(117) + '.xlsx')
-    print(test_dataframe_location)
-    test_df.to_excel(test_dataframe_location, index=True)
+    #test_dataframe_location = os.path.join('./checkpoints/pneumothorax_testset_df_seed' + str(117) + '.xlsx')
+    #print(test_dataframe_location)
+    #test_df.to_excel(test_dataframe_location, index=True)
     #test_dataframe_location = os.path.join(save_location,
     #                                       'pneumothorax_testset_df_seed' + str(config["seed"]) + '.xlsx')
+
+
+    train_location = os.path.join(dir_base, "/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/dataframe_saving/seed"+str(seed)+"/pneumothorax_train_df_seed"+str(seed)+".xlsx")
+    train_df = pd.read_excel(train_location, engine='openpyxl')
+    train_df.set_index("image_id", inplace=True)
+
+    valid_location = os.path.join(dir_base, "/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/dataframe_saving/seed"+str(seed)+"/pneumothorax_valid_df_seed"+str(seed)+".xlsx")
+    valid_df = pd.read_excel(valid_location, engine='openpyxl')
+    valid_df.set_index("image_id", inplace=True)
+
+    test_location = os.path.join(dir_base, "/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/dataframe_saving/seed"+str(seed)+"/pneumothorax_testset_df_seed"+str(seed)+".xlsx")
+    test_df = pd.read_excel(test_location, engine='openpyxl')
+    test_df.set_index("image_id", inplace=True)
 
     #print(test_dataframe_location)
     #test_df.to_excel(test_dataframe_location, index=True)
