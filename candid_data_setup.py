@@ -32,6 +32,7 @@ def candid_data_setup(seed):
 
 
     train_location = os.path.join(dir_base, "/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/dataframe_saving/seed"+str(seed)+"/pneumothorax_train_df_seed"+str(seed)+".xlsx")
+    print(train_location)
     train_df = pd.read_excel(train_location, engine='openpyxl')
     train_df.set_index("image_id", inplace=True)
 
