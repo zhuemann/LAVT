@@ -32,15 +32,14 @@ def candid_data_setup(seed):
 
 
     train_location = os.path.join("/UserData/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/dataframe_saving/seed"+str(seed)+"/pneumothorax_train_df_seed"+str(seed)+".xlsx")
-    print(train_location)
     train_df = pd.read_excel(train_location, engine='openpyxl')
     train_df.set_index("image_id", inplace=True)
 
-    valid_location = os.path.join(dir_base, "/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/dataframe_saving/seed"+str(seed)+"/pneumothorax_valid_df_seed"+str(seed)+".xlsx")
+    valid_location = os.path.join("/UserData/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/dataframe_saving/seed"+str(seed)+"/pneumothorax_valid_df_seed"+str(seed)+".xlsx")
     valid_df = pd.read_excel(valid_location, engine='openpyxl')
     valid_df.set_index("image_id", inplace=True)
 
-    test_location = os.path.join(dir_base, "/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/dataframe_saving/seed"+str(seed)+"/pneumothorax_testset_df_seed"+str(seed)+".xlsx")
+    test_location = os.path.join("/UserData/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/dataframe_saving/seed"+str(seed)+"/pneumothorax_testset_df_seed"+str(seed)+".xlsx")
     test_df = pd.read_excel(test_location, engine='openpyxl')
     test_df.set_index("image_id", inplace=True)
 
