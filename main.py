@@ -58,6 +58,5 @@ if __name__ == '__main__':
     utils.init_distributed_mode(args)
     print('Image size: {}'.format(str(args.img_size)))
     dataset, dataset_valid, dataset_test = candid_data_setup(seed = 117)
-
     #main(args, dataset, dataset_valid)
     test_main(args, dataset_test)
