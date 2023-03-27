@@ -65,6 +65,6 @@ if __name__ == '__main__':
     for seed in seeds:
 
         dataset, dataset_valid, dataset_test = candid_data_setup(seed = seed)
-        #main(args, dataset, dataset_valid)
+        main(args, dataset, dataset_valid)
         args.resume = './checkpoints/model_best_lavt.pth'
         test_main(args, dataset_test)
