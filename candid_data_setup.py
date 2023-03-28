@@ -59,10 +59,10 @@ def candid_data_setup(seed):
 
         #return T.Compose(transforms)
 
-    print("train_df")
-    print(train_df)
-    print("valid df")
-    print(valid_df)
+    #print("train_df")
+    #print(train_df)
+    #print("valid df")
+    #print(valid_df)
 
     bert_path = os.path.join(dir_base, 'Zach_Analysis/models/bert/')
     tokenizer = AutoTokenizer.from_pretrained(bert_path)
