@@ -112,6 +112,7 @@ def evaluate(model, data_loader, bert_model, device):
     results_str += '    overall IoU = %.2f\n' % (cum_I * 100. / cum_U)
     print(results_str)
     print(f"Final Test Dice: = {np.average(test_dice)}")
+    return np.average(test_dice)
 
 
 
@@ -158,7 +159,8 @@ def test_main(args, dataset_test):
     else:
         bert_model = None
     print(f"using a bert model: {bert_model}")
-    evaluate(model, data_loader_test, bert_model, device=device)
+    acc = evaluate(model, data_loader_test, bert_model, device=device)
+    return acc
 
 
 if __name__ == "__main__":

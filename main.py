@@ -2,6 +2,7 @@ import argparse
 import utils
 from test import test_main
 from candid_data_setup import candid_data_setup
+import pandas as pd
 import os
 
 def get_parser():
@@ -66,6 +67,12 @@ if __name__ == '__main__':
         args.model_id = "lavt_seed" + str(seed)
         args.resume = ''
         dataset, dataset_valid, dataset_test = candid_data_setup(seed = seed)
-        main(args, dataset, dataset_valid)
+        valid_log = main(args, dataset, dataset_valid)
+        df = pd.DataFrame(valid_log)
         args.resume = './checkpoints/model_best_lavt_seed'+str(seed) +'.pth'
-        test_main(args, dataset_test)
+
+        acc = test_main(args, dataset_test)
+        df["test_accuracy"] = acc
+
+        filepath = './logs/lavt_v2/valid_log_seed'+str(seed) +'.xlsx'
+        df.to_excel(filepath, index=False)

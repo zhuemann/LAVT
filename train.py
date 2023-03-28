@@ -140,7 +140,7 @@ def evaluate(model, data_loader, bert_model):
     print(f"Average Valid Dice Score = {np.average(valid_dice)}")
 
 
-    return 100 * iou, 100 * cum_I / cum_U
+    return 100 * iou, 100 * cum_I / cum_U, np.average(valid_dice)
 
 
 def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoch, print_freq,
@@ -321,14 +321,15 @@ def main(args, dataset, dataset_valid):
     else:
         resume_epoch = -999
 
+    valid_log = []
     # training loops
     for epoch in range(max(0, resume_epoch+1), args.epochs):
         data_loader.sampler.set_epoch(epoch)
         train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoch, args.print_freq,
                         iterations, bert_model)
         print("about to go into evaluate")
-        iou, overallIoU = evaluate(model, data_loader_test, bert_model)
-
+        iou, overallIoU, valid_dice = evaluate(model, data_loader_test, bert_model)
+        valid_log.append(valid_dice)
         print('Average object IoU {}'.format(iou))
         print('Overall IoU {}'.format(overallIoU))
         save_checkpoint = (best_oIoU < overallIoU)
@@ -352,7 +353,7 @@ def main(args, dataset, dataset_valid):
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
     print('Training time {}'.format(total_time_str))
 
-
+    return valid_log
 if __name__ == "__main__":
     from args import get_parser
     parser = get_parser()
