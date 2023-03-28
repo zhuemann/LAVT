@@ -453,6 +453,7 @@ class MultiModalSwinTransformer(nn.Module):
         if isinstance(pretrained, str):
             self.apply(_init_weights)
             logger = get_root_logger()
+            print("made it here in loading")
             load_checkpoint(self, pretrained, strict=('upernet' in pretrained), logger=logger)
         elif pretrained is None:
             self.apply(_init_weights)
