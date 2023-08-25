@@ -52,9 +52,10 @@ def evaluate(model, data_loader, bert_model, device):
     target_rle_list = []
     ids_list = []
     dice_list = []
+    i = 0
 
     with torch.no_grad():
-        for i, data in metric_logger.log_every(data_loader, 100, header):
+        for data in metric_logger.log_every(data_loader, 100, header):
             images, targets, sentences, attentions, row_ids = data
             images, targets, sentences, attentions = images.to(device), targets.to(device), \
                                                    sentences.to(device), attentions.to(device)
@@ -179,6 +180,7 @@ def evaluate(model, data_loader, bert_model, device):
             del image, targets, sentences, attentions, output, output_mask
             if bert_model is not None:
                 del last_hidden_states, embedding
+            i += 1
 
     mean_IoU = np.array(mean_IoU)
     mIoU = np.mean(mean_IoU)
