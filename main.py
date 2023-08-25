@@ -21,7 +21,7 @@ def get_parser():
     parser.add_argument('--device', default='cuda:0', help='device')  # only used when testing on a single machine
     parser.add_argument('--epochs', default=40, type=int, metavar='N', help='number of total epochs to run')
     parser.add_argument('--fusion_drop', default=0.0, type=float, help='dropout rate for PWAMs')
-    parser.add_argument('--img_size', default=480, type=int, help='input image size')
+    parser.add_argument('--img_size', default=1024, type=int, help='input image size')
     parser.add_argument("--local_rank", type=int, help='local rank for DistributedDataParallel')
     parser.add_argument('--lr', default=0.00005, type=float, help='the initial learning rate')
     parser.add_argument('--mha', default='', help='If specified, should be in the format of a-b-c-d, e.g., 4-4-4-4,'
@@ -61,18 +61,24 @@ if __name__ == '__main__':
     # set up distributed learning
     utils.init_distributed_mode(args)
     print('Image size: {}'.format(str(args.img_size)))
-    seeds = [98, 117, 295, 456, 915]
+    #seeds = [98, 117, 295, 456, 915]
+    seeds = [915]
 
     for seed in seeds:
+        # name the model with the seed number
         args.model_id = "lavt_seed" + str(seed)
+        # initialize the model from swin and base bert
         args.resume = ''
+        # load in the data splits and set them up as datasets
         dataset, dataset_valid, dataset_test = candid_data_setup(seed = seed)
+        # train the model
         valid_log = main(args, dataset, dataset_valid)
-        df = pd.DataFrame(valid_log)
+        # set the model to load in for this specific seed
         args.resume = './checkpoints/model_best_lavt_seed'+str(seed) +'.pth'
-
+        # test the model
         acc = test_main(args, dataset_test)
+        # save validation scores and test score
+        df = pd.DataFrame(valid_log)
         df["test_accuracy"] = acc
-
         filepath = './logs/lavt_v2/valid_log_seed'+str(seed) +'.xlsx'
-        df.to_excel(filepath, index=False)
+        # df.to_excel(filepath, index=False)

@@ -6,6 +6,9 @@ import torch
 import torch.utils.data
 from torch import nn
 
+from utility import mask2rle
+
+
 from bert.modeling_bert import BertModel
 import torchvision
 
@@ -35,6 +38,7 @@ def evaluate(model, data_loader, bert_model, device):
     model.eval()
     metric_logger = utils.MetricLogger(delimiter="  ")
 
+    dir_base = "/UserData/"
     # evaluation variables
     cum_I, cum_U = 0, 0
     eval_seg_iou_list = [.5, .6, .7, .8, .9]
@@ -44,47 +48,122 @@ def evaluate(model, data_loader, bert_model, device):
     header = 'Test:'
     test_dice = []
 
+    pred_rle_list = []
+    target_rle_list = []
+    ids_list = []
+    dice_list = []
+
     with torch.no_grad():
-        for data in metric_logger.log_every(data_loader, 100, header):
-            image, target, sentences, attentions = data
-            image, target, sentences, attentions = image.to(device), target.to(device), \
+        for i, data in metric_logger.log_every(data_loader, 100, header):
+            images, targets, sentences, attentions, row_ids = data
+            images, targets, sentences, attentions = images.to(device), targets.to(device), \
                                                    sentences.to(device), attentions.to(device)
             sentences = sentences.squeeze(1)
             #print(f"setences size: {sentences.size()}")
             attentions = attentions.squeeze(1)
-            target_gpu = target
-            target = target.cpu().data.numpy()
+            target_gpu = targets
+            target = targets.cpu().data.numpy()
             #for j in range(sentences.size(-1)):
             for j in range(1):
                 #print(f"j: {j}")
                 if bert_model is not None:
                     last_hidden_states = bert_model(sentences[:, :, j], attention_mask=attentions[:, :, j])[0]
                     embedding = last_hidden_states.permute(0, 2, 1)
-                    output = model(image, embedding, l_mask=attentions[:, :, j].unsqueeze(-1))
+                    output = model(images, embedding, l_mask=attentions[:, :, j].unsqueeze(-1))
                 else:
                     #print(f"setences size: {sentences.size()}")
                     #print(f"attentions size: {attentions.size()}")
                     #output = model(image, sentences[:, :, j], l_mask=attentions[:, :, j])
-                    output = model(image, sentences, l_mask=attentions)
+                    outputs = model(images, sentences, l_mask=attentions)
                 #print(f"target: {target}")
                 #print(type(target_gpu))
                 #print(f"output type: {type(output)}")
                 # """
 
-                for i in range(0, output.shape[0]):
+                for j in range(0, outputs.shape[0]):
                     #print(f"output size: {output[0].size()}")
                     #print(f"target size: {target[0].size()}")
-                    dice = dice_coeff(output[0], target_gpu[0])
+                    dice = dice_coeff(outputs[0], target_gpu[0])
                     dice = dice.item()
                     #print(f"dice index : {len(test_dice)} with value: {dice}")
                     # if torch.max(output[i]) == 0 and torch.max(target[i]) == 0:
                     #    dice = 1
                     test_dice.append(dice)
+
+                    output_item = outputs[j].cpu().data.numpy()
+                    target_item = targets[j].cpu().data.numpy()
+                    pred_rle = mask2rle(output_item)
+                    target_rle = mask2rle(target_item)
+                    ids_example = row_ids[i * 8 + j]
+
+                    pred_rle_list.append(pred_rle)
+                    target_rle_list.append(target_rle)
+                    ids_list.append(ids_example)
+                    dice_list.append(dice)
+
+                    # print(f"Target size: {targets.size()}")
+                    target_np = targets.cpu().detach().numpy()
+                    target_np = target_np[j, 0, :, :]
+                    max = np.amax(target_np)
+                    target = (target_np * 255) / max
+                    fullpath = os.path.join(dir_base,
+                                            'Zach_Analysis/dgx_images/model_output_comparisons/smp_unet/targets/' + str(
+                                                ids_example) + '.png')
+                    cv2.imwrite(fullpath, target_np)
+
+                    # print(f"outputs: {outputs.size()}")
+                    output = outputs.cpu().detach().numpy()
+                    output = output[j, :, :]
+                    max = np.amax(output)
+                    output = (output * 255) / max
+                    fullpath = os.path.join(dir_base,
+                                            'Zach_Analysis/dgx_images/model_output_comparisons/smp_unet/outputs/' + str(
+                                                ids_example) + '.png')
+                    cv2.imwrite(fullpath, output)
+
+                    # print(f"images size: {images.size()}")
+
+                    # image = images.cpu().detach().numpy()
+                    image = images[j, 0, :, :]
+                    image = image.cpu().detach().numpy()
+                    # images = images[0, :, :]
+                    fullpath = os.path.join(dir_base,
+                                            'Zach_Analysis/dgx_images/model_output_comparisons/smp_unet/images/' + str(
+                                                ids_example) + '.png')
+                    cv2.imwrite(fullpath, image)
+
+                    img_overlay = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+                    # print(np.sum(model_output) / 255)
+                    target_batch_unnorm = targets.cpu().detach().numpy()
+                    img_overlay[:, :, 1] += (
+                                target_batch_unnorm[j, 0, :, :] * (255 / 3) / np.amax(target_batch_unnorm[j, 0, :, :]))
+                    fullpath = os.path.join(dir_base,
+                                            'Zach_Analysis/dgx_images/model_output_comparisons/smp_unet/target_overlay/' + str(
+                                                ids_example) + '.png')
+                    cv2.imwrite(fullpath, img_overlay)
+
+                    img_overlay = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+                    model_output = outputs.cpu().detach().numpy()
+                    output_overlay = (model_output[j, :, :] * 255 / 3) / np.amax(model_output[j, :, :])
+
+                    # print(output_overlay.shape)
+                    np.squeeze(output_overlay)
+                    # print(output_overlay.shape)
+                    img_overlay[:, :, 1] += output_overlay[:, :]
+                    # img_overlay[:, :, 1] += output_overlay[j, 0, :, :]
+
+                    # print(f"model_output: {np.shape(model_output)}")
+                    fullpath = os.path.join(dir_base,
+                                            'Zach_Analysis/dgx_images/model_output_comparisons/smp_unet/output_overlay/' + str(
+                                                ids_example) + '.png')
+                    cv2.imwrite(fullpath, img_overlay)
+
+
                 # """
 
                 output = output.cpu()
                 output_mask = output.argmax(1).data.numpy()
-                I, U = computeIoU(output_mask, target)
+                I, U = computeIoU(output_mask, targets)
                 if U == 0:
                     this_iou = 0.0
                 else:
@@ -97,7 +176,7 @@ def evaluate(model, data_loader, bert_model, device):
                     seg_correct[n_eval_iou] += (this_iou >= eval_seg_iou)
                 seg_total += 1
 
-            del image, target, sentences, attentions, output, output_mask
+            del image, targets, sentences, attentions, output, output_mask
             if bert_model is not None:
                 del last_hidden_states, embedding
 
