@@ -20,6 +20,10 @@ import numpy as np
 from PIL import Image
 import torch.nn.functional as F
 from utility import dice_coeff
+import sys
+
+numpy.set_printoptions(threshold=sys.maxsize)
+
 
 
 def get_dataset(image_set, transform, args):
@@ -104,6 +108,7 @@ def evaluate(model, data_loader, bert_model, device):
                     #output_mask = np.expand_dims(output_mask, 0)
                     print(f"output_mask: {output_mask.shape}")
                     print(f"type: {type(output_mask)}")
+                    print(f"full output: {output_mask}")
                     pred_rle = mask2rle(output_mask)
                     target_rle = mask2rle(target_item)
                     ids_example = row_ids[i * 8 + j]
