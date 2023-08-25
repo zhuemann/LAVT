@@ -222,7 +222,7 @@ def evaluate(model, data_loader, bert_model, device):
     test_df_data["target"] = pd.Series(target_rle_list)
     test_df_data["prediction"] = pd.Series(pred_rle_list)
 
-    filepath = os.path.join("/UserData/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/LAVT_v50/prediction_dataframe_seed295" + '.xlsx')
+    filepath = os.path.join("/UserData/Zach_Analysis/result_logs/candid_result/image_text_segmentation_for_paper/higher_res_for_paper/LAVT_v50/prediction_dataframe_seed456" + '.xlsx')
     test_df_data.to_excel(filepath, index=False)
 
     return np.average(test_dice)
