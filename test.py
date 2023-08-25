@@ -97,10 +97,11 @@ def evaluate(model, data_loader, bert_model, device):
                     print(f"targets size: {targets.size()}")
 
                     output_item = outputs[j].cpu().data.numpy()
-                    target_item = targets[j].cpu().data.numpy()
+                    target_item = targets[j][0].cpu().data.numpy()
                     print(f"output item size: {output_item.shape}")
-
-                    pred_rle = mask2rle(output_item)
+                    output_mask = output_item[0,:,:] + output_item[1,:,:]
+                    print(f"output_mask: {output_mask.shape}")
+                    pred_rle = mask2rle(output_mask)
                     target_rle = mask2rle(target_item)
                     ids_example = row_ids[i * 8 + j]
 
@@ -115,7 +116,7 @@ def evaluate(model, data_loader, bert_model, device):
                     max = np.amax(target_np)
                     target = (target_np * 255) / max
                     fullpath = os.path.join(dir_base,
-                                            'Zach_Analysis/dgx_images/model_output_comparisons/smp_unet/targets/' + str(
+                                            'Zach_Analysis/dgx_images/model_output_comparisons/lavt/targets/' + str(
                                                 ids_example) + '.png')
                     cv2.imwrite(fullpath, target_np)
 
@@ -125,7 +126,7 @@ def evaluate(model, data_loader, bert_model, device):
                     max = np.amax(output)
                     output = (output * 255) / max
                     fullpath = os.path.join(dir_base,
-                                            'Zach_Analysis/dgx_images/model_output_comparisons/smp_unet/outputs/' + str(
+                                            'Zach_Analysis/dgx_images/model_output_comparisons/lavt/outputs/' + str(
                                                 ids_example) + '.png')
                     cv2.imwrite(fullpath, output)
 
@@ -136,7 +137,7 @@ def evaluate(model, data_loader, bert_model, device):
                     image = image.cpu().detach().numpy()
                     # images = images[0, :, :]
                     fullpath = os.path.join(dir_base,
-                                            'Zach_Analysis/dgx_images/model_output_comparisons/smp_unet/images/' + str(
+                                            'Zach_Analysis/dgx_images/model_output_comparisons/lavt/images/' + str(
                                                 ids_example) + '.png')
                     cv2.imwrite(fullpath, image)
 
@@ -146,7 +147,7 @@ def evaluate(model, data_loader, bert_model, device):
                     img_overlay[:, :, 1] += (
                                 target_batch_unnorm[j, 0, :, :] * (255 / 3) / np.amax(target_batch_unnorm[j, 0, :, :]))
                     fullpath = os.path.join(dir_base,
-                                            'Zach_Analysis/dgx_images/model_output_comparisons/smp_unet/target_overlay/' + str(
+                                            'Zach_Analysis/dgx_images/model_output_comparisons/lavt/target_overlay/' + str(
                                                 ids_example) + '.png')
                     cv2.imwrite(fullpath, img_overlay)
 
@@ -162,7 +163,7 @@ def evaluate(model, data_loader, bert_model, device):
 
                     # print(f"model_output: {np.shape(model_output)}")
                     fullpath = os.path.join(dir_base,
-                                            'Zach_Analysis/dgx_images/model_output_comparisons/smp_unet/output_overlay/' + str(
+                                            'Zach_Analysis/dgx_images/model_output_comparisons/lavt/output_overlay/' + str(
                                                 ids_example) + '.png')
                     cv2.imwrite(fullpath, img_overlay)
 
