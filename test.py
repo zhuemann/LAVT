@@ -113,6 +113,7 @@ def evaluate(model, data_loader, bert_model, device):
                     #print(f"target_item size: {target_item.shape}")
 
                     target_rle = mask2rle(target_item)
+                    print(f"index: {i*8 + j}")
                     ids_example = row_ids[i * 8 + j]
 
                     pred_rle_list.append(pred_rle)
