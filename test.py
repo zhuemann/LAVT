@@ -100,7 +100,7 @@ def evaluate(model, data_loader, bert_model, device):
                     target_item = targets[j][0].cpu().data.numpy()
                     print(f"output item size: {output_item.shape}")
                     output_mask = output_item[0,:,:] + output_item[1,:,:]
-                    output_mask = np.expand_dims(output_mask, 0)
+                    #output_mask = np.expand_dims(output_mask, 0)
                     print(f"output_mask: {output_mask.shape}")
                     pred_rle = mask2rle(output_mask)
                     target_rle = mask2rle(target_item)
