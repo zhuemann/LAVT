@@ -122,9 +122,9 @@ def evaluate(model, data_loader, bert_model, device):
 
                     # print(f"Target size: {targets.size()}")
                     target_np = targets.cpu().detach().numpy()
-                    target_np = target_np[j, 0, :, :]
+                    target_np = target_np[j, :, :]
                     max = np.amax(target_np)
-                    target = (target_np * 255) / max
+                    target_np = (target_np * 255) / max
                     fullpath = os.path.join(dir_base,
                                             'Zach_Analysis/dgx_images/model_output_comparisons/lavt/targets/' + str(
                                                 ids_example) + '.png')
