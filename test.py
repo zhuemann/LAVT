@@ -195,7 +195,7 @@ def evaluate(model, data_loader, bert_model, device):
                     seg_correct[n_eval_iou] += (this_iou >= eval_seg_iou)
                 seg_total += 1
 
-            del image, targets, sentences, attentions, output, output_mask
+            del image, targets, sentences, attentions, outputs, output_mask
             if bert_model is not None:
                 del last_hidden_states, embedding
             i += 1
