@@ -98,6 +98,8 @@ def evaluate(model, data_loader, bert_model, device):
 
                     output_item = outputs[j].cpu().data.numpy()
                     target_item = targets[j].cpu().data.numpy()
+                    print(f"output item size: {output_item}")
+
                     pred_rle = mask2rle(output_item)
                     target_rle = mask2rle(target_item)
                     ids_example = row_ids[i * 8 + j]
