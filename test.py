@@ -91,6 +91,10 @@ def evaluate(model, data_loader, bert_model, device):
                     #    dice = 1
                     test_dice.append(dice)
 
+
+                    print(f"outputs size: {outputs.size()}")
+                    print(f"targets size: {targets.size()}")
+
                     output_item = outputs[j].cpu().data.numpy()
                     target_item = targets[j].cpu().data.numpy()
                     pred_rle = mask2rle(output_item)
