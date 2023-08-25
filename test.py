@@ -178,7 +178,7 @@ def evaluate(model, data_loader, bert_model, device):
                                                 ids_example) + '.png')
                     #cv2.imwrite(fullpath, img_overlay)
                     """
-
+                i += 1
 
                 # """
 
@@ -200,7 +200,7 @@ def evaluate(model, data_loader, bert_model, device):
             del images, target, sentences, attentions, outputs, output_mask
             if bert_model is not None:
                 del last_hidden_states, embedding
-            i += 1
+
 
     mean_IoU = np.array(mean_IoU)
     mIoU = np.mean(mean_IoU)
