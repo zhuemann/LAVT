@@ -180,8 +180,8 @@ def evaluate(model, data_loader, bert_model, device):
 
                 # """
 
-                output = output.cpu()
-                output_mask = output.argmax(1).data.numpy()
+                outputs = outputs.cpu()
+                output_mask = outputs.argmax(1).data.numpy()
                 I, U = computeIoU(output_mask, targets)
                 if U == 0:
                     this_iou = 0.0
