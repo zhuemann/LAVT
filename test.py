@@ -183,7 +183,7 @@ def evaluate(model, data_loader, bert_model, device):
 
                 outputs = outputs.cpu()
                 output_mask = outputs.argmax(1).data.numpy()
-                I, U = computeIoU(output_mask, targets)
+                I, U = computeIoU(output_mask, target)
                 if U == 0:
                     this_iou = 0.0
                 else:
@@ -196,7 +196,7 @@ def evaluate(model, data_loader, bert_model, device):
                     seg_correct[n_eval_iou] += (this_iou >= eval_seg_iou)
                 seg_total += 1
 
-            del images, targets, sentences, attentions, outputs, output_mask
+            del images, target, sentences, attentions, outputs, output_mask
             if bert_model is not None:
                 del last_hidden_states, embedding
             i += 1
