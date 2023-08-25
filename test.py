@@ -119,7 +119,7 @@ def evaluate(model, data_loader, bert_model, device):
                     target_rle_list.append(target_rle)
                     ids_list.append(ids_example)
                     dice_list.append(dice)
-
+                    """
                     # print(f"Target size: {targets.size()}")
                     target_np = targets.cpu().detach().numpy()
                     target_np = target_np[j, :, :]
@@ -176,6 +176,7 @@ def evaluate(model, data_loader, bert_model, device):
                                             'Zach_Analysis/dgx_images/model_output_comparisons/lavt/output_overlay/' + str(
                                                 ids_example) + '.png')
                     #cv2.imwrite(fullpath, img_overlay)
+                    """
 
 
                 # """
@@ -195,7 +196,7 @@ def evaluate(model, data_loader, bert_model, device):
                     seg_correct[n_eval_iou] += (this_iou >= eval_seg_iou)
                 seg_total += 1
 
-            del image, targets, sentences, attentions, outputs, output_mask
+            del images, targets, sentences, attentions, outputs, output_mask
             if bert_model is not None:
                 del last_hidden_states, embedding
             i += 1
