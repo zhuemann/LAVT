@@ -106,10 +106,10 @@ def evaluate(model, data_loader, bert_model, device):
                     #output_mask = output_item[0,:,:] + output_item[1,:,:]
                     #output_mask = output_item[1, :, :]
                     #output_mask = np.expand_dims(output_mask, 0)
-                    print(f"output_mask: {output_mask.shape}")
-                    print(f"type: {type(output_mask)}")
-                    print(f"full output: {output_mask}")
-                    pred_rle = mask2rle(output_mask)
+                    print(f"output_mask: {output_item.shape}")
+                    print(f"type: {type(output_item)}")
+                    print(f"full output: {output_item}")
+                    pred_rle = mask2rle(output_item)
                     target_rle = mask2rle(target_item)
                     ids_example = row_ids[i * 8 + j]
 
