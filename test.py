@@ -96,9 +96,9 @@ def evaluate(model, data_loader, bert_model, device):
                     test_dice.append(dice)
 
 
-                    print(f"outputs size: {outputs.size()}")
-                    print(f"outputs size: {outputs[0].size()}")
-                    print(f"targets size: {targets.size()}")
+                    #print(f"outputs size: {outputs.size()}")
+                    #print(f"outputs size: {outputs[0].size()}")
+                    #print(f"targets size: {targets.size()}")
 
                     output_item = outputs[j].cpu().data.numpy().argmax(0)
                     target_item = targets[j].cpu().data.numpy()
@@ -110,7 +110,7 @@ def evaluate(model, data_loader, bert_model, device):
                     #print(f"type: {type(output_item)}")
                     #print(f"full output: {output_item}")
                     pred_rle = mask2rle(output_item)
-                    print(f"target_item size: {target_item.shape}")
+                    #print(f"target_item size: {target_item.shape}")
 
                     target_rle = mask2rle(target_item)
                     ids_example = row_ids[i * 8 + j]
@@ -128,7 +128,7 @@ def evaluate(model, data_loader, bert_model, device):
                     fullpath = os.path.join(dir_base,
                                             'Zach_Analysis/dgx_images/model_output_comparisons/lavt/targets/' + str(
                                                 ids_example) + '.png')
-                    cv2.imwrite(fullpath, target_np)
+                    #cv2.imwrite(fullpath, target_np)
 
                     # print(f"outputs: {outputs.size()}")
                     output = outputs.cpu().detach().numpy()
@@ -138,7 +138,7 @@ def evaluate(model, data_loader, bert_model, device):
                     fullpath = os.path.join(dir_base,
                                             'Zach_Analysis/dgx_images/model_output_comparisons/lavt/outputs/' + str(
                                                 ids_example) + '.png')
-                    cv2.imwrite(fullpath, output)
+                    #cv2.imwrite(fullpath, output)
 
                     # print(f"images size: {images.size()}")
 
@@ -149,33 +149,33 @@ def evaluate(model, data_loader, bert_model, device):
                     fullpath = os.path.join(dir_base,
                                             'Zach_Analysis/dgx_images/model_output_comparisons/lavt/images/' + str(
                                                 ids_example) + '.png')
-                    cv2.imwrite(fullpath, image)
+                    #cv2.imwrite(fullpath, image)
 
-                    img_overlay = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+                    #img_overlay = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
                     # print(np.sum(model_output) / 255)
-                    target_batch_unnorm = targets.cpu().detach().numpy()
-                    img_overlay[:, :, 1] += (
-                                target_batch_unnorm[j, 0, :, :] * (255 / 3) / np.amax(target_batch_unnorm[j, 0, :, :]))
-                    fullpath = os.path.join(dir_base,
-                                            'Zach_Analysis/dgx_images/model_output_comparisons/lavt/target_overlay/' + str(
-                                                ids_example) + '.png')
-                    cv2.imwrite(fullpath, img_overlay)
+                    #target_batch_unnorm = targets.cpu().detach().numpy()
+                    #img_overlay[:, :, 1] += (
+                    #            target_batch_unnorm[j, 0, :, :] * (255 / 3) / np.amax(target_batch_unnorm[j, 0, :, :]))
+                    #fullpath = os.path.join(dir_base,
+                    #                        'Zach_Analysis/dgx_images/model_output_comparisons/lavt/target_overlay/' + str(
+                    #                            ids_example) + '.png')
+                    #cv2.imwrite(fullpath, img_overlay)
 
-                    img_overlay = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+                    #img_overlay = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
                     model_output = outputs.cpu().detach().numpy()
                     output_overlay = (model_output[j, :, :] * 255 / 3) / np.amax(model_output[j, :, :])
 
                     # print(output_overlay.shape)
                     np.squeeze(output_overlay)
                     # print(output_overlay.shape)
-                    img_overlay[:, :, 1] += output_overlay[:, :]
+                    #img_overlay[:, :, 1] += output_overlay[:, :]
                     # img_overlay[:, :, 1] += output_overlay[j, 0, :, :]
 
                     # print(f"model_output: {np.shape(model_output)}")
                     fullpath = os.path.join(dir_base,
                                             'Zach_Analysis/dgx_images/model_output_comparisons/lavt/output_overlay/' + str(
                                                 ids_example) + '.png')
-                    cv2.imwrite(fullpath, img_overlay)
+                    #cv2.imwrite(fullpath, img_overlay)
 
 
                 # """
@@ -211,6 +211,13 @@ def evaluate(model, data_loader, bert_model, device):
     results_str += '    overall IoU = %.2f\n' % (cum_I * 100. / cum_U)
     print(results_str)
     print(f"Final Test Dice: = {np.average(test_dice)}")
+
+    test_df_data = pd.DataFrame(pd.Series(ids_list))
+    # test_df_data["ids"] = pd.Series(ids_list)
+    test_df_data["dice"] = pd.Series(dice_list)
+    test_df_data["target"] = pd.Series(target_rle_list)
+    test_df_data["prediction"] = pd.Series(pred_rle_list)
+
     return np.average(test_dice)
 
 
