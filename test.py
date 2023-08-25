@@ -114,7 +114,8 @@ def evaluate(model, data_loader, bert_model, device):
 
                     target_rle = mask2rle(target_item)
                     print(f"index: {i*8 + j}")
-                    ids_example = row_ids[i * 8 + j]
+                    print(row_ids)
+                    ids_example = row_ids[(i * 8) + j]
 
                     pred_rle_list.append(pred_rle)
                     target_rle_list.append(target_rle)
