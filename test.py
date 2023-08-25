@@ -100,11 +100,11 @@ def evaluate(model, data_loader, bert_model, device):
                     print(f"outputs size: {outputs[0].size()}")
                     print(f"targets size: {targets.size()}")
 
-                    output_item = outputs[j].cpu().data.numpy()
+                    output_item = outputs[j].cpu().data.numpy().argmax(0)
                     target_item = targets[j][0].cpu().data.numpy()
                     print(f"output item size: {output_item.shape}")
                     #output_mask = output_item[0,:,:] + output_item[1,:,:]
-                    output_mask = output_item[1, :, :]
+                    #output_mask = output_item[1, :, :]
                     #output_mask = np.expand_dims(output_mask, 0)
                     print(f"output_mask: {output_mask.shape}")
                     print(f"type: {type(output_mask)}")
