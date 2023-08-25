@@ -22,7 +22,7 @@ import torch.nn.functional as F
 from utility import dice_coeff
 import sys
 
-numpy.set_printoptions(threshold=sys.maxsize)
+np.set_printoptions(threshold=sys.maxsize)
 
 
 
