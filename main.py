@@ -62,7 +62,7 @@ if __name__ == '__main__':
     utils.init_distributed_mode(args)
     print('Image size: {}'.format(str(args.img_size)))
     #seeds = [98, 117, 295, 456, 915]
-    seeds = [915]
+    seeds = [98]
 
     for seed in seeds:
         # name the model with the seed number
