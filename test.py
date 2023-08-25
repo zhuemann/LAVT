@@ -93,6 +93,7 @@ def evaluate(model, data_loader, bert_model, device):
 
 
                     print(f"outputs size: {outputs.size()}")
+                    print(f"outputs size: {outputs[0].size()}")
                     print(f"targets size: {targets.size()}")
 
                     output_item = outputs[j].cpu().data.numpy()
