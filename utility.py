@@ -62,3 +62,14 @@ def dice_coeff(pred, gt):
     m1 = pred.view(num, -1)  # Flatten
     m2 = gt.view(num, -1)  # Flatten
     return (2. * intersection + smooth) / (m1.sum() + m2.sum() + smooth)
+
+def mask2rle(img):
+    """
+    img: numpy array, 1 - mask, 0 - background
+    Returns run length as string formatted
+    """
+    pixels = img.flatten()
+    pixels = np.concatenate([[0], pixels, [0]])
+    runs = np.where(pixels[1:] != pixels[:-1])[0] + 1
+    runs[1::2] -= runs[::2]
+    return ' '.join(str(x) for x in runs)
