@@ -102,14 +102,16 @@ def evaluate(model, data_loader, bert_model, device):
 
                     output_item = outputs[j].cpu().data.numpy().argmax(0)
                     target_item = targets[j][0].cpu().data.numpy()
-                    print(f"output item size: {output_item.shape}")
+                    #print(f"output item size: {output_item.shape}")
                     #output_mask = output_item[0,:,:] + output_item[1,:,:]
                     #output_mask = output_item[1, :, :]
                     #output_mask = np.expand_dims(output_mask, 0)
-                    print(f"output_mask: {output_item.shape}")
-                    print(f"type: {type(output_item)}")
-                    print(f"full output: {output_item}")
+                    #print(f"output_mask: {output_item.shape}")
+                    #print(f"type: {type(output_item)}")
+                    #print(f"full output: {output_item}")
                     pred_rle = mask2rle(output_item)
+                    print(f"target_item size: {target_item.size()}")
+
                     target_rle = mask2rle(target_item)
                     ids_example = row_ids[i * 8 + j]
 
