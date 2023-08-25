@@ -21,6 +21,7 @@ from PIL import Image
 import torch.nn.functional as F
 from utility import dice_coeff
 import sys
+import pandas as pd
 
 np.set_printoptions(threshold=sys.maxsize)
 
