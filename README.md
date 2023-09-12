@@ -2,6 +2,7 @@
 Welcome to the official repository for the method presented in
 "LAVT: Language-Aware Vision Transformer for Referring Image Segmentation."
 
+Use <CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --nproc_per_node 1 main.py> to run on A6000
 
 ![Pipeline Image](pipeline.jpg)
 

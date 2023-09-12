@@ -156,7 +156,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, epoc
 
     for data in metric_logger.log_every(data_loader, print_freq, header):
         total_its += 1
-        image, target, sentences, attentions = data
+        image, target, sentences, attentions, row_ids = data
         image, target, sentences, attentions = image.cuda(non_blocking=True),\
                                                target.cuda(non_blocking=True),\
                                                sentences.cuda(non_blocking=True),\
