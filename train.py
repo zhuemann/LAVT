@@ -90,7 +90,7 @@ def evaluate(model, data_loader, bert_model):
     with torch.no_grad():
         for data in metric_logger.log_every(data_loader, 100, header):
             total_its += 1
-            image, target, sentences, attentions = data
+            image, target, sentences, attentions, row_ids = data
             image, target, sentences, attentions = image.cuda(non_blocking=True),\
                                                    target.cuda(non_blocking=True),\
                                                    sentences.cuda(non_blocking=True), \
