@@ -73,8 +73,8 @@ if __name__ == '__main__':
         # load in the data splits and set them up as datasets
         dataset, dataset_valid, dataset_test = candid_data_setup(seed = seed)
         # train the model
-        # valid_log = 0
-        valid_log = main(args, dataset, dataset_valid)
+        valid_log = 0
+        # valid_log = main(args, dataset, dataset_valid)
         # set the model to load in for this specific seed
         args.resume = './checkpoints/model_best_lavt_seed'+str(seed) +'.pth'
         # test the model
@@ -83,4 +83,4 @@ if __name__ == '__main__':
         df = pd.DataFrame(valid_log)
         df["test_accuracy"] = acc
         filepath = './logs/lavt_v2/valid_log_seed'+str(seed) +'.xlsx'
-        # df.to_excel(filepath, index=False)
+        df.to_excel(filepath, index=False)
