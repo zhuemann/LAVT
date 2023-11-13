@@ -74,7 +74,7 @@ if __name__ == '__main__':
         dataset, dataset_valid, dataset_test = candid_data_setup(seed = seed)
         # train the model
         valid_log = [0,0,0]
-        # valid_log = main(args, dataset, dataset_valid)
+        valid_log = main(args, dataset, dataset_valid)
         # set the model to load in for this specific seed
         args.resume = './checkpoints/model_best_lavt_seed'+str(seed) +'.pth'
         # test the model

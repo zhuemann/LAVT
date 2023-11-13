@@ -59,6 +59,12 @@ def evaluate(model, data_loader, bert_model, device):
     dice_list = []
     i = 0
 
+    # Print the total number of parameters
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f"Total Parameters: {total_params}")
+
+    print(fail)
+
     with torch.no_grad():
         for data in metric_logger.log_every(data_loader, 100, header):
             images, targets, sentences, attentions, row_ids = data
