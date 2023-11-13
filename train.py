@@ -239,6 +239,10 @@ def main(args, dataset, dataset_valid):
     #print(args.model)
     model = segmentation.__dict__[args.model](pretrained=args.pretrained_swin_weights,
                                               args=args)
+    # Print the total number of parameters
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f"Total Parameters: {total_params}")
+
     model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     model.cuda()
     #print("not sure what this is")
@@ -247,6 +251,7 @@ def main(args, dataset, dataset_valid):
     #model = torch.nn.parallel.DistributedDataParallel(model, device_ids=0, find_unused_parameters=True)
     single_model = model.module
     #single_model = model
+    print(fail)
     print(f"args.model determines if we use bert: {args.model}")
     if args.model != 'lavt_one':
         model_class = BertModel
