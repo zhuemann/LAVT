@@ -61,9 +61,9 @@ if __name__ == '__main__':
     # set up distributed learning
     utils.init_distributed_mode(args)
     print('Image size: {}'.format(str(args.img_size)))
-    #seeds = [98, 117, 295, 456, 915]
+    seeds = [98, 117, 295, 456, 915]
     #seeds = [456]
-    seeds = [1289, 1734]
+    #seeds = [1289, 1734]
 
     for seed in seeds:
         # name the model with the seed number
@@ -76,11 +76,11 @@ if __name__ == '__main__':
         valid_log = [0,0,0]
         valid_log = main(args, dataset, dataset_valid)
         # set the model to load in for this specific seed
-        args.resume = './checkpoints/model_best_lavt_seed'+str(seed) +'.pth'
+        args.resume = './checkpoints/model_best_lavt_seed_without_text'+str(seed) +'.pth'
         # test the model
         acc = test_main(args, dataset_test)
         # save validation scores and test score
         df = pd.DataFrame(valid_log)
         df["test_accuracy"] = acc
-        filepath = './logs/lavt_v2/valid_log_seed'+str(seed) +'.xlsx'
+        filepath = './logs/lavt_v2/valid_log_seed_without_text'+str(seed) +'.xlsx'
         df.to_excel(filepath, index=False)

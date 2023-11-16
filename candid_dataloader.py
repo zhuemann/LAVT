@@ -81,6 +81,9 @@ class TextImageDataset(Dataset):
         text = text.replace("[PERSONALNAME]", "")
         text = text.replace("\n", "")
 
+        ### makes the text an empty sting####
+        text = ""
+
         #if self.wordDict != None:
         #    text = TextImageDataset.synonymsReplacement(self, text)
         #    text = TextImageDataset.shuffledTextAugmentation(text)
