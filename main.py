@@ -61,7 +61,7 @@ if __name__ == '__main__':
     # set up distributed learning
     utils.init_distributed_mode(args)
     print('Image size: {}'.format(str(args.img_size)))
-    seeds = [98, 117, 295, 456, 915]
+    seeds = [117, 295, 456, 915]
     #seeds = [456]
     #seeds = [1289, 1734]
 
@@ -74,7 +74,7 @@ if __name__ == '__main__':
         dataset, dataset_valid, dataset_test = candid_data_setup(seed = seed)
         # train the model
         valid_log = [0,0,0]
-        #valid_log = main(args, dataset, dataset_valid)
+        valid_log = main(args, dataset, dataset_valid)
         # set the model to load in for this specific seed
         args.resume = './checkpoints/model_best_lavt_seed'+str(seed) +'.pth'
         # test the model
