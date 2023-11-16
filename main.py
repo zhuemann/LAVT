@@ -74,13 +74,13 @@ if __name__ == '__main__':
         dataset, dataset_valid, dataset_test = candid_data_setup(seed = seed)
         # train the model
         valid_log = [0,0,0]
-        valid_log = main(args, dataset, dataset_valid)
+        #valid_log = main(args, dataset, dataset_valid)
         # set the model to load in for this specific seed
-        args.resume = './checkpoints/model_best_lavt_seed_without_text'+str(seed) +'.pth'
+        args.resume = './checkpoints/model_best_lavt_seed'+str(seed) +'.pth'
         # test the model
         acc = test_main(args, dataset_test)
         # save validation scores and test score
         df = pd.DataFrame(valid_log)
         df["test_accuracy"] = acc
-        filepath = './logs/lavt_v2/valid_log_seed_without_text'+str(seed) +'.xlsx'
+        filepath = './logs/lavt_v2/valid_log_seed'+str(seed) +'.xlsx'
         df.to_excel(filepath, index=False)
