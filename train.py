@@ -251,7 +251,6 @@ def main(args, dataset, dataset_valid):
     #model = torch.nn.parallel.DistributedDataParallel(model, device_ids=0, find_unused_parameters=True)
     single_model = model.module
     #single_model = model
-    print(fail)
     print(f"args.model determines if we use bert: {args.model}")
     if args.model != 'lavt_one':
         model_class = BertModel
