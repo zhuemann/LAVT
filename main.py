@@ -61,7 +61,7 @@ if __name__ == '__main__':
     # set up distributed learning
     utils.init_distributed_mode(args)
     print('Image size: {}'.format(str(args.img_size)))
-    seeds = [117, 295, 456, 915]
+    seeds = [98, 117, 295, 456, 915]
     #seeds = [456]
     #seeds = [1289, 1734]
 
