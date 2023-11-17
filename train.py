@@ -325,6 +325,18 @@ def main(args, dataset, dataset_valid):
     else:
         resume_epoch = -999
 
+    def count_unfrozen_parameters(model):
+        unfrozen_params = sum(param.numel() for param in model.parameters() if param.requires_grad)
+        return unfrozen_params
+
+    print("Number of unfrozen parameters in model before:", count_unfrozen_parameters(model))
+    print("Number of unfrozen parameters in bert before:", count_unfrozen_parameters(bert_model))
+    for param in bert_model.parameters():
+        param.requires_grad = False
+    print("Number of unfrozen parameters in bert after:", count_unfrozen_parameters(bert_model))
+    print("Number of unfrozen parameters in model after:", count_unfrozen_parameters(model))
+
+
     valid_log = []
     # training loops
     for epoch in range(max(0, resume_epoch+1), args.epochs):
