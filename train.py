@@ -335,10 +335,10 @@ def main(args, dataset, dataset_valid):
     # [[p for p in single_model.text_encoder.encoder.layer[i].parameters() if p.requires_grad] for i in range(10)]
 
     print("Number of unfrozen parameters in model before:", count_unfrozen_parameters(model))
-    print("Number of unfrozen parameters in bert before:", count_unfrozen_parameters(single_bert_model))
+    #print("Number of unfrozen parameters in bert before:", count_unfrozen_parameters(single_bert_model))
     for param in single_model.text_encoder.encoder.parameters():
         param.requires_grad = False
-    print("Number of unfrozen parameters in bert after:", count_unfrozen_parameters(single_bert_model))
+    #print("Number of unfrozen parameters in bert after:", count_unfrozen_parameters(single_bert_model))
     print("Number of unfrozen parameters in model after:", count_unfrozen_parameters(model))
 
 
