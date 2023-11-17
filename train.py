@@ -264,6 +264,8 @@ def main(args, dataset, dataset_valid):
         bert_model = None
         single_bert_model = None
     print(f"using bert model: {bert_model}")
+    print(f"using sing_bert model: {single_bert_model}")
+
     # resume training
     if args.resume:
         checkpoint = torch.load(args.resume, map_location='cpu')
@@ -325,8 +327,8 @@ def main(args, dataset, dataset_valid):
     else:
         resume_epoch = -999
 
-    def count_unfrozen_parameters(model):
-        unfrozen_params = sum(param.numel() for param in model.parameters() if param.requires_grad)
+    def count_unfrozen_parameters(model_obj):
+        unfrozen_params = sum(param.numel() for param in model_obj.parameters() if param.requires_grad)
         return unfrozen_params
 
     print("Number of unfrozen parameters in model before:", count_unfrozen_parameters(model))
