@@ -293,6 +293,7 @@ def main(args, dataset, dataset_valid):
                                 if p.requires_grad] for i in range(10)])},
         ]
     else:
+        print("are here in the setting of parameters")
         params_to_optimize = [
             {'params': backbone_no_decay, 'weight_decay': 0.0},
             {'params': backbone_decay},
