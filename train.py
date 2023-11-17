@@ -330,10 +330,10 @@ def main(args, dataset, dataset_valid):
         return unfrozen_params
 
     print("Number of unfrozen parameters in model before:", count_unfrozen_parameters(model))
-    print("Number of unfrozen parameters in bert before:", count_unfrozen_parameters(bert_model))
-    for param in bert_model.parameters():
+    print("Number of unfrozen parameters in bert before:", count_unfrozen_parameters(single_bert_model))
+    for param in single_bert_model.parameters():
         param.requires_grad = False
-    print("Number of unfrozen parameters in bert after:", count_unfrozen_parameters(bert_model))
+    print("Number of unfrozen parameters in bert after:", count_unfrozen_parameters(single_bert_model))
     print("Number of unfrozen parameters in model after:", count_unfrozen_parameters(model))
 
 
