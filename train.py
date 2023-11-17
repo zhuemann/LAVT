@@ -304,6 +304,7 @@ def main(args, dataset, dataset_valid):
                                 if p.requires_grad] for i in range(10)])},
         ]
 
+    print(params_to_optimize)
     # optimizer
     optimizer = torch.optim.AdamW(params_to_optimize,
                                   lr=args.lr,
