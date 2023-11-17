@@ -273,6 +273,21 @@ def main(args, dataset, dataset_valid):
         if args.model != 'lavt_one':
             single_bert_model.load_state_dict(checkpoint['bert_model'])
 
+
+    def count_unfrozen_parameters(model_obj):
+        unfrozen_params = sum(param.numel() for param in model_obj.parameters() if param.requires_grad)
+        return unfrozen_params
+
+    # [[p for p in single_model.text_encoder.encoder.layer[i].parameters() if p.requires_grad] for i in range(10)]
+
+    print("Number of unfrozen parameters in model before:", count_unfrozen_parameters(model))
+    #print("Number of unfrozen parameters in bert before:", count_unfrozen_parameters(single_bert_model))
+    for param in single_model.text_encoder.encoder.parameters():
+        param.requires_grad = False
+    #print("Number of unfrozen parameters in bert after:", count_unfrozen_parameters(single_bert_model))
+    print("Number of unfrozen parameters in model after:", count_unfrozen_parameters(model))
+
+
     # parameters to optimize
     backbone_no_decay = list()
     backbone_decay = list()
@@ -304,6 +319,8 @@ def main(args, dataset, dataset_valid):
                                 if p.requires_grad] for i in range(10)])},
         ]
 
+
+
     # optimizer
     optimizer = torch.optim.AdamW(params_to_optimize,
                                   lr=args.lr,
@@ -327,19 +344,6 @@ def main(args, dataset, dataset_valid):
         resume_epoch = checkpoint['epoch']
     else:
         resume_epoch = -999
-
-    def count_unfrozen_parameters(model_obj):
-        unfrozen_params = sum(param.numel() for param in model_obj.parameters() if param.requires_grad)
-        return unfrozen_params
-
-    # [[p for p in single_model.text_encoder.encoder.layer[i].parameters() if p.requires_grad] for i in range(10)]
-
-    print("Number of unfrozen parameters in model before:", count_unfrozen_parameters(model))
-    #print("Number of unfrozen parameters in bert before:", count_unfrozen_parameters(single_bert_model))
-    for param in single_model.text_encoder.encoder.parameters():
-        param.requires_grad = False
-    #print("Number of unfrozen parameters in bert after:", count_unfrozen_parameters(single_bert_model))
-    print("Number of unfrozen parameters in model after:", count_unfrozen_parameters(model))
 
 
     valid_log = []
